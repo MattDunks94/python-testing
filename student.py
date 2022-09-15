@@ -10,6 +10,16 @@ class Student:
         self.end_date = date.today() + timedelta(days=365)
         self.naughty_list = False
 
+    # Creates Students full name
     @property
     def full_name(self):
         return f"{self._first_name} {self._last_name}"
+
+    # Creates Students email
+    @property
+    def email(self):
+        return f"{self._first_name.lower()}.{self._last_name.lower()}@email.com"
+
+    # alert_santa method, set to True
+    def alert_santa(self):
+        self.naughty_list = True
