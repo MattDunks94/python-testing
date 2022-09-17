@@ -2,8 +2,8 @@
 import unittest
 # Importing the class 'Student' from student.py
 from student import Student
-
 from datetime import timedelta
+from unittest.mock import patch 
 
 
 # Tests for our 'Student' class
@@ -25,6 +25,7 @@ class TestStudent(unittest.TestCase):
     """
     Creating the instance variable 'student'
     This reduces code repetition, DRY(Don't Repeat Youself)
+    as setUp is executed after every individual test method
     """
     def setUp(self):
         print('setUp')
@@ -46,6 +47,7 @@ class TestStudent(unittest.TestCase):
 
         self.assertTrue(self.student.naughty_list)
 
+    # Testing if student.email is equal to 'string'
     def test_email(self):
         print('test_email')
         self.assertEqual(self.student.email, 'john.doe@email.com')
@@ -55,8 +57,27 @@ class TestStudent(unittest.TestCase):
         # Defining variable to 'student.end_date' from our class Student
         # from student.py
         old_end_date = self.student.end_date
+        # Extending Student's end date by 5 days
+        self.student.apply_extension(5)
         self.assertEqual(self.student.end_date, old_end_date + timedelta(
             days=5))
+
+    def test_course_schedule_success(self):
+        with patch("student.requests.get") as mocked_get:
+            mocked_get.return_value.ok = True
+            mocked_get.return_value.text = "Success!"
+
+            schedule = self.student.course_schedule()
+            self.assertEqual(schedule, "Success!")
+
+    def test_course_schedule_failed(self):
+        with patch("student.requests.get") as mocked_get:
+            mocked_get.return_value.ok = False
+            mocked_get.return_value.text = "Something went wrong!"
+
+            schedule = self.student.course_schedule()
+            self.assertEqual(schedule, "Something went wrong with \
+                the response!")
 
 
 if __name__ == '__main__':
