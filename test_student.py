@@ -62,6 +62,7 @@ class TestStudent(unittest.TestCase):
         self.assertEqual(self.student.end_date, old_end_date + timedelta(
             days=5))
 
+    # Testing schedule data collection as successful
     def test_course_schedule_success(self):
         with patch("student.requests.get") as mocked_get:
             mocked_get.return_value.ok = True
@@ -70,14 +71,19 @@ class TestStudent(unittest.TestCase):
             schedule = self.student.course_schedule()
             self.assertEqual(schedule, "Success!")
 
+    # Testing schedule data collection as failed
     def test_course_schedule_failed(self):
         with patch("student.requests.get") as mocked_get:
             mocked_get.return_value.ok = False
-            mocked_get.return_value.text = "Something went wrong!"
 
             schedule = self.student.course_schedule()
-            self.assertEqual(schedule, "Something went wrong with \
-                the response!")
+            self.assertEqual(schedule, "Something went wrong!")
+
+    # Testing the return of Student's start date
+    def test_start_date(self):
+        print('test_start_date')
+        startDate = self.student._start_date
+        return startDate
 
 
 if __name__ == '__main__':
