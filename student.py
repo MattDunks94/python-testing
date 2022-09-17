@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+import requests
 
 
 class Student:
@@ -27,3 +28,15 @@ class Student:
     # This extends students end date
     def apply_extension(self, days):
         self.end_date = self.end_date + timedelta(days=days)
+
+    def course_schedule(self):
+        # Gathering student's course schedule through a mock database
+        # Collect data using the .get method, assigning it to our response var
+        response = requests.get(f"http://company.com/course-schedule/(self._last_name)/(self._first_name)")
+
+        # If statement, checking if data has been collected
+        if response.ok:
+            return response.text
+        # Otherwise, returns error message
+        else:
+            return "Something went wrong with the response!"
