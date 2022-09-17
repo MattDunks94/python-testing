@@ -32,11 +32,14 @@ class Student:
     def course_schedule(self):
         # Gathering student's course schedule through a mock database
         # Collect data using the .get method, assigning it to our response var
-        response = requests.get(f"http://company.com/course-schedule/(self._last_name)/(self._first_name)")
+        response = requests.get(f"http://company.com/course-schedule/{self._last_name}/{self._first_name}")
 
         # If statement, checking if data has been collected
         if response.ok:
             return response.text
         # Otherwise, returns error message
         else:
-            return "Something went wrong with the response!"
+            return "Something went wrong!"
+
+    def student_start_date(self):
+        return self._start_date
