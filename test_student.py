@@ -14,15 +14,21 @@ class TestStudent(unittest.TestCase):
     def setUpClass(cls):
         print('setUpClass')
 
-    # This runs at the end of testing.
+    # This runs at the end of testing
     @classmethod    
     def tearDownClass(cls):
         print('tearDownClass')
 
+    # setUp runs before each test method
+    """
+    Creating the instance variable 'student'
+    This reduces code repetition, DRY(Don't Repeat Youself)
+    """
     def setUp(self):
         print('setUp')
         self.student = Student('John', 'Doe')
 
+    # setUp runs after each test method
     def tearDown(self):
         print('tearDown')
 
